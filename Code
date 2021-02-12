@@ -8,7 +8,7 @@ Linkedin = {
         totalRequestsSent: 0,
         // set to true to add note in invites
         addNote: true,
-        note: "Hi, i am interested to work with Hike. link to my resume:https://drive.google.com/file/d/1n6K3aKU17rU3ejLjVVTIyXXK7u9fAbcr/view?usp=sharing  Thanks a lot"
+        note: "Hi, i am interested to work with Exxat. I have a varied skillset (C++, Java, MySQL, Algorithms), have won lots of programming competitions, and have good projects. Resume link : https://drive.google.com/file/d/1n6K3aKU17rU3ejLjVVTIyXXK7u9fAbcr/view?usp=sharing Thanks a lot"
     },
     init: function (data, config) {
         console.info("INFO: script initialized on the page...");
@@ -150,4 +150,3 @@ Linkedin = {
 }
 
 Linkedin.init({}, Linkedin.config);
-
