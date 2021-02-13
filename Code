@@ -6,9 +6,9 @@ Linkedin = {
         // set to -1 for no limit
         maxRequests: -1,
         totalRequestsSent: 0,
-        // set to true to add note in invites
+        // set to false to skip adding note in invites
         addNote: true,
-        note: "Hi, i am interested to work with Exxat. I have a varied skillset (C++, Java, MySQL, Algorithms), have won lots of programming competitions, and have good projects. Resume link : https://drive.google.com/file/d/1n6K3aKU17rU3ejLjVVTIyXXK7u9fAbcr/view?usp=sharing Thanks a lot"
+        note: "Hi, i am interested to work with VMware. I have a varied skillset (C++, Java, MySQL, Algorithms), have won lots of programming competitions, and have good projects. Resume link : https://drive.google.com/file/d/1n6K3aKU17rU3ejLjVVTIyXXK7u9fAbcr/view?usp=sharing Thanks a lot"
     },
     init: function (data, config) {
         console.info("INFO: script initialized on the page...");
@@ -36,7 +36,7 @@ Linkedin = {
         }
     },
     compile: function (data, config) {
-		var elements = document.querySelectorAll('button');
+        var elements = document.querySelectorAll('button');
         data.pageButtons = [...elements].filter(function (element) {
             return element.textContent.trim() === "Connect";
         });
@@ -48,6 +48,13 @@ Linkedin = {
             data.pageButtonTotal = data.pageButtons.length;
             console.info("INFO: " + data.pageButtonTotal + " connect buttons found");
             data.pageButtonIndex = 0;
+            var names = document.getElementsByClassName("entity-result__title-text");
+            names = [...names].filter(function (element) {
+                return element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.textContent.includes("Connect\n");
+            });
+            data.connectNames = [...names].map(function (element) {
+                return element.innerText.split(" ")[0];
+            });
             console.debug("DEBUG: starting to send invites in " + config.actionDelay + " ms");
             setTimeout(() => { this.sendInvites(data, config) }, config.actionDelay);
         }
@@ -87,8 +94,8 @@ Linkedin = {
         }
     },
     pasteNote: function (data, config) {
-        noteTextBox = document.getElementById("custom-message")
-        noteTextBox.value = config.note;
+        noteTextBox = document.getElementById("custom-message");
+        noteTextBox.value = config.note.replace("{{name}}", data.connectNames[data.pageButtonIndex]);
         noteTextBox.dispatchEvent(new Event('input', {
             bubbles: true
         }));
